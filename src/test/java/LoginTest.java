@@ -2,7 +2,6 @@ import org.testng.annotations.Test;
 import pages.AuthenticationPage;
 import pages.ProfilePage;
 
-import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
@@ -39,6 +38,7 @@ public class LoginTest extends BaseTest {
         authenticationPage.userSignIn("    " + correctLogin + "   ", correctPassword);
         ProfilePage profilePage = new ProfilePage(authenticationPage.getDriver());
         assertTrue(profilePage.isLoaded(), "Correct login with whitespaces is not allowed");
+        profilePage.signOut();
     }
 
 
@@ -49,9 +49,9 @@ public class LoginTest extends BaseTest {
         authenticationPage.setLogin(correctLogin);
         authenticationPage.setPassword(correctPassword);
         authenticationPage.userSignIn();
-        //TODO check if errors
-        ProfilePage profilePage = new ProfilePage(authenticationPage.getDriver());
+        ProfilePage profilePage = new ProfilePage(getDriver());
         assertTrue(profilePage.isLoaded());
+        profilePage.signOut();
     }
 
 

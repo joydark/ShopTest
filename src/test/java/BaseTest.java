@@ -4,7 +4,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 abstract public class BaseTest {
-    public String baseUrl = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
+    String baseUrl = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
     private WebDriver driver;
 
     @BeforeSuite
@@ -20,7 +20,7 @@ abstract public class BaseTest {
         }
     }
 
-    public WebDriver getDriver() {
+    WebDriver getDriver() {
         return driver;
     }
 }

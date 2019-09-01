@@ -5,6 +5,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AuthenticationPage extends BasePage {
 
@@ -12,6 +14,7 @@ public class AuthenticationPage extends BasePage {
     public static String errorPasswordIsRequired = "Password is required.";
     public static String errorInvalidEmail = "Invalid email address.";
     public static String errorAuthenticationFailed = "Authentication failed.";
+    public static String errorEmailAlreadyRegistered = "An account using this email address has already been registered.";
 
 
     @FindBy(id = "email_create")
@@ -35,21 +38,19 @@ public class AuthenticationPage extends BasePage {
     @FindBy(className = "alert-danger")
     private WebElement errorAlert;
 
-    public CreateAccountPage createAccount(String email) {
+    @FindBy(id = "create_account_error")
+    private WebElement emailError;
+
+
+    public void createAccount(String email) {
         setEmail(email);
         createAccountButton.click();
-        return new CreateAccountPage(driver);
     }
 
     public void setEmail(String email) {
         this.createAccountEmail.clear();
         this.createAccountEmail.sendKeys(email);
     }
-
-    public void clickCreateAccountButton() {
-        createAccountButton.click();
-    }
-
 
     public void setLogin(String login) {
         this.login.clear();
@@ -74,6 +75,21 @@ public class AuthenticationPage extends BasePage {
 
     public AuthenticationPage(WebDriver driver) {
         super(driver);
+    }
+
+    public boolean hasAuthenticationError(String errorText) {
+        WebElement error = null;
+        try {
+            error = driver.findElement(By.xpath("//*[contains(text(), '" + errorText + "')]"));
+        } catch (NoSuchElementException e) {
+        }
+        return error != null;
+    }
+
+    public Boolean hasEmailError(String emailErrorText) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("create_account_error")));
+        return this.emailError.getText().contains(emailErrorText);
     }
 
 

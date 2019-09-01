@@ -5,9 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import pages.BasePage;
-
-import java.util.Date;
 
 public class CreateAccountPage extends BasePage {
     protected static String errorPhoneRequired = "You; must register at least one phone number.";
@@ -129,10 +126,6 @@ public class CreateAccountPage extends BasePage {
     public void setPassword(String password) {
         this.password.clear();
         this.password.sendKeys(password);
-    }
-
-    public void setBirthday(Date date) {
-
     }
 
     public void setDayOfBirthDay(String dayOfBirthDay) {
